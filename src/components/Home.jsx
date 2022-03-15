@@ -6,12 +6,13 @@ import MapContainer from './MapContainer'
 const Home = () => {
 
   const [Coordinates, setCoordinates] = useState({lat : 0, lng : 0})
+  const [isDataLoading, setIsDataLoading] = useState(false)
 
   return (
     <div className='w-screen h-screen overflow-hidden flex justify-center items-center bg-gray-50 relative'>
       <Header/>
-      <div className='w-450 h-full flex items-center justify-center'>
-        <LeftContainer/>
+      <div className='w-450 h-full overflow-hidden flex items-center justify-center'>
+        <LeftContainer isDataLoading={isDataLoading}/>
       </div>
       <div className='flex-1 h-full flex items-center justify-center'>
         <MapContainer setCoordinates={setCoordinates} Coordinates={Coordinates} />

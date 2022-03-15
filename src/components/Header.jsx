@@ -22,7 +22,7 @@ const Header = () => {
             {/* <Autocomplete> */}
 
             <input type="text" className='w-full h-full border-none outline-none text-gray-700 text-base' placeholder='Search Here......' />
-                <IoSearch classname='text-lg text-gray-700' />
+                <IoSearch className='text-lg text-gray-700' />
             {/* </Autocomplete> */}
                 {/* Search Box Ends */}
         </div>
@@ -31,7 +31,7 @@ const Header = () => {
 
         <div className='relative ml-6'>
             <div onClick={() => setIsMenuActive(!isMenuActive)} className='bg-white py-2 px-3 flex items-center justify-center gap-2 rounded-lg shadow-lg cursor-pointer'>
-                <IoStar classname=' text-base text-gray-700 '/> 
+                <IoStar className=' text-base text-gray-700 '/> 
                 <p>Choose Ratings</p> 
                 <IoChevronDown className='text-base text-gray-700'/>
             </div>
