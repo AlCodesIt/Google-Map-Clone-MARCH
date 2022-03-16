@@ -11,21 +11,30 @@ const ratingsData = [
     { id: 4, ratings : 5, value : 5 },
 ]
 
-const Header = () => {
+const Header = ({setType, setRatings, setCoordinates}) => {
     const [isMenuActive, setIsMenuActive] = useState(false)
+    const [autocomplete, setAutocomplete] = useState(null)
+
+    const onLoad = (autoc) => setAutocomplete(autoc)
+    const onPlacedChanged = () => {
+        const lat = autocomplete.getPlace().geometry.location.lat();
+    const lng = autocomplete.getPlace().geometry.location.lng();
+        setCoordinates({lat, lng})
+        console.log(lat, lng)
+    }
   return (
       <AnimatePresence initial={false}>
     <div className='fixed flex items-center inset-x-0 top-2 p-4 gap-4 z-50'>
         {/* Search Box Starts */}
+            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlacedChanged}>
         <div className='flex items-center gap-2 bg-white w-400 py-1 px-3 rounded-lg shadow-lg'>
 
-            {/* <Autocomplete> */}
 
             <input type="text" className='w-full h-full border-none outline-none text-gray-700 text-base' placeholder='Search Here......' />
                 <IoSearch className='text-lg text-gray-700' />
-            {/* </Autocomplete> */}
-                {/* Search Box Ends */}
         </div>
+            </Autocomplete>
+                {/* Search Box Ends */}
 
         {/* Ratings Starts Here */}
 
@@ -45,12 +54,12 @@ const Header = () => {
                 exit={{opacity : 0, scale : 0.5}}
              className='w-52 bg-white rounded-lg shadow-lg absolute top-11 inset-x-0 flex flex-col gap-1 items-start justify-evenly'>
 
-                <p className='flex items-center gap-2 px-4 py-1 cursor-pointer hover:bg-gray-200 mt-2 w-full'>ALL Ratings</p>
+                <p onClick={() => setRatings("")} className='flex items-center gap-2 px-4 py-1 cursor-pointer hover:bg-gray-200 mt-2 w-full'>ALL Ratings</p>
                 <div className='w-full mb-2 -mt-2'>
                     {
                         ratingsData && ratingsData.map(data => (
 
-                            <p key={data.id} className='flex items-center gap-2 px-4 py-1 text-orange-500 text-base font-semibold cursor-pointer hover:bg-gray-200'>{data.ratings} <Rating size="small" value={data.value} readOnly /></p>
+                            <p key={data.id} onClick={() => setRatings(data.value)}  className='flex items-center gap-2 px-4 py-1 text-orange-500 text-base font-semibold cursor-pointer hover:bg-gray-200'>{data.ratings} <Rating size="small" value={data.value} readOnly /></p>
                         ))
                     }
                     </div>
@@ -65,18 +74,23 @@ const Header = () => {
         {/* Restaurants */}
             <motion.div 
             whileTap={{ scale: 0.8 }}
-            className='bg-white px-4 py-2 shadow-lg rounded-lg cursor-pointer flex items-center gap-3'>
+            className='bg-white px-4 py-2 shadow-lg rounded-lg cursor-pointer flex items-center gap-3'
+            
+                onClick={() => setType('restaurants')}
+            >
                 <MdRestaurant className='text-lg text-gray-700'/> <p className='text-base pointer-events-none text-gray-700'>Restaurants</p>
             </motion.div>
         {/* Hotels */}
              <motion.div 
             whileTap={{ scale: 0.8 }}
+            onClick={() => setType('hotels')} 
             className='bg-white px-4 py-2 shadow-lg rounded-lg cursor-pointer flex items-center gap-3'>
                 <MdLocalHotel className='text-lg text-gray-700'/> <p className='text-base pointer-events-none text-gray-700'>Hotels</p>
             </motion.div>
         {/* Attractions */}
          <motion.div 
             whileTap={{ scale: 0.8 }}
+            onClick={() => setType('attractions')} 
             className='bg-white px-4 py-2 shadow-lg rounded-lg cursor-pointer flex items-center gap-3'>
                 <MdMap className='text-lg text-gray-700'/> <p className='text-base pointer-events-none text-gray-700'>Attractions</p>
             </motion.div>

@@ -3,7 +3,7 @@ import DataCardContainer from '../components/DataCardContainer'
 import CardLoadingContainer from './CardLoadingContainer'
 
 
-const LeftContainer = ({isDataLoading}) => {
+const LeftContainer = ({isDataLoading, data}) => {
 
 
   return (
@@ -18,7 +18,17 @@ const LeftContainer = ({isDataLoading}) => {
               
               </>
             ) : (
-              <DataCardContainer/>
+
+              <>
+              {
+                data && data.map( (info, i) => (
+
+                  <DataCardContainer data = {info} key={i} />
+                ))
+              }
+              </>
+              
+              
             )
           }
 
